@@ -1,27 +1,23 @@
 #include <iostream>
 #include <string>
-
 class Person {
 private:
     std::string name;
     int age;
     std::string email;
-    std::string address; // Новое поле
+    std::string address; 
 
 public:
     std::string getName() const {
         return name;
     }
-
     int getAge() const {
         return age;
     }
-
     std::string getEmail() const {
         return email;
     }
-
-    std::string getAddress() const {
+    std::string getAddress() const {  
         return address;
     }
 
@@ -29,60 +25,59 @@ public:
         if (!newName.empty()) {
             name = newName;
         } else {
-            std::cerr << "Ошибка: Имя не может быть пустым!\n";
+            std::cerr << "Error: Name cannot be empty!" << std::endl;
         }
     }
-
     void setAge(int newAge) {
         if (newAge >= 0 && newAge <= 120) {
             age = newAge;
         } else {
-            std::cerr << "Ошибка: Возраст должен быть в диапазоне от 0 до 120!\n";
+            std::cerr << "Error: Age must be between 0 and 120!" << std::endl;
         }
     }
-
     void setEmail(const std::string& newEmail) {
         if (newEmail.find('@') != std::string::npos) {
             email = newEmail;
         } else {
-            std::cerr << "Ошибка: Email должен содержать символ '@'!\n";
+            std::cerr << "Error: Invalid email format!" << std::endl;
         }
     }
-
-    void setAddress(const std::string& newAddress) {
+    void setAddress(const std::string& newAddress) { 
         if (!newAddress.empty()) {
             address = newAddress;
         } else {
-            std::cerr << "Ошибка: Адрес не может быть пустым!\n";
+            std::cerr << "Error: Address cannot be empty!" << std::endl;
         }
     }
 
-    void displayInfo() const {
-        std::cout << "Имя: " << name 
-                  << ", Возраст: " << age 
+     void displayInfo() const {
+        std::cout << "Name: " << name 
+                  << ", Age: " << age 
                   << ", Email: " << email 
-                  << ", Адрес: " << address << "\n";
+                  << ", Address: " << address << std::endl;
     }
 };
 
 int main() {
     Person person;
 
-    person.setName("Иван Иванов");
-    person.setAge(30);
-    person.setEmail("ivan@example.com");
-    person.setAddress("ул. Ленина, д. 1");
+    person.setName("John Doe");
+    person.setAge(25);
+    person.setEmail("john.doe@example.com");
+    person.setAddress("123 Main St"); 
 
-    std::cout << "Информация о человеке:\n";
-    person.displayInfo();
+    std::cout << "Person Information:" << std::endl;
+    std::cout << "Name: " << person.getName() << std::endl;
+    std::cout << "Age: " << person.getAge() << std::endl;
+    std::cout << "Email: " << person.getEmail() << std::endl;
+    std::cout << "Address: " << person.getAddress() << std::endl;
 
-    std::cout << "\nПопытка установить некорректные данные:\n";
-    person.setName("");           // Ошибка: имя не может быть пустым
-    person.setAge(150);           // Ошибка: возраст вне диапазона
-    person.setEmail("invalid");   // Ошибка: email без '@'
-    person.setAddress("");        // Ошибка: адрес не может быть пустым
+    person.setName(""); 
+    person.setAge(150);  
+    person.setEmail("invalid-email"); 
+    person.setAddress("");  
 
-    std::cout << "\nИнформация после попыток изменений:\n";
+    std::cout << "\nAfter invalid attempts:" << std::endl;
     person.displayInfo();
 
     return 0;

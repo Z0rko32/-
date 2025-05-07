@@ -1,46 +1,102 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include <deque>
+#include <stdexcept>
 
 template <typename T>
 class Queue {
 private:
-    std::vector<T> data;
+    std::deque<T> data;  
 
 public:
     void push(const T& item) {
         data.push_back(item);
+        std::cout << "Added item: " << item << " to queue\n";
     }
 
     void pop() {
-        if (!data.empty()) {
-            data.erase(data.begin());
-        } else {
-            std::cout << "Очередь пуста!\n";
+        if (empty()) {
+            throw std::out_of_range("Queue is empty!");
         }
+        std::cout << "Removed item: " << data.front() << " from queue\n";
+        data.pop_front();
+    }
+
+    T front() const {
+        if (empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+        return data.front();
+    }
+
+    bool empty() const {
+        return data.empty();
+    }
+
+    size_t size() const {
+        return data.size();
     }
 
     void display() const {
-        std::cout << "Очередь: ";
+        std::cout << "\nQueue contents (" << size() << " items):\n";
         for (const auto& item : data) {
-            std::cout << item << " ";
+            std::cout << "- " << item << "\n";
         }
-        std::cout << "\n";
     }
 };
 
 int main() {
-    Queue<int> q1;
-    q1.push(10);
-    q1.push(20);
-    q1.push(30);
-    q1.pop();
-    q1.display();  // 20 30
+    std::cout << "=== Queue with integers ===\n";
+    
+    Queue<int> intQueue;
+    
+    intQueue.push(10);
+    intQueue.push(20);
+    intQueue.push(30);
+    
+    intQueue.display();
+    
+    try {
+        std::cout << "\nProcessing queue:\n";
+        std::cout << "First item: " << intQueue.front() << std::endl;
+        intQueue.pop();
+        std::cout << "Next item: " << intQueue.front() << std::endl;
+        intQueue.pop();
+        std::cout << "Last item: " << intQueue.front() << std::endl;
+        intQueue.pop();
+        
+        intQueue.pop();  
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
 
-    Queue<std::string> q2;
-    q2.push("A");
-    q2.push("B");
-    q2.display();  // A B
+    std::cout << "\n=== Queue with strings ===\n";
+    
+    Queue<std::string> stringQueue;
+    
+    stringQueue.push("Hello");
+    stringQueue.push("World");
+    stringQueue.push("Template");
+    
+    stringQueue.display();
+    
+    try {
+        std::cout << "\nProcessing queue:\n";
+        std::cout << "First item: " << stringQueue.front() << std::endl;
+        stringQueue.pop();
+        std::cout << "Next item: " << stringQueue.front() << std::endl;
+        stringQueue.pop();
+        std::cout << "Last item: " << stringQueue.front() << std::endl;
+        stringQueue.pop();
+        
+        if (stringQueue.empty()) {
+            std::cout << "String queue is now empty!" << std::endl;
+        }
+
+        stringQueue.front(); 
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
 
     return 0;
 }

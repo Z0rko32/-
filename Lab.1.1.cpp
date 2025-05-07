@@ -30,14 +30,12 @@ public:
         }
     }
 
-    // Метод для лечения
     void heal(int amount) {
         health += amount;
         if (health > maxHealth) health = maxHealth;
         std::cout << name << " healed by " << amount << ". Current HP: " << health << std::endl;
     }
 
-    // Метод для получения урона
     void takeDamage(int amount) {
         health -= amount;
         if (health < 0) health = 0;
@@ -55,8 +53,8 @@ int main() {
     hero.attackEnemy(monster);
     monster.displayInfo();
 
-    monster.heal(20); // Монстр лечится
-    monster.takeDamage(30); // Монстр получает урон
+    monster.heal(20); 
+    monster.takeDamage(30); 
 
     return 0;
 }
